@@ -8,12 +8,9 @@ from embed_utils import CombinedEmbeddings
 from span_ed import SpanEditSearch
 from pprint import pprint
 import numpy as np
-import sys
 import codecs
-reload(sys)
-sys.setdefaultencoding("utf-8")
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
-sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+sys.stdin = codecs.getreader('utf-8')(sys.stdin)
 
 
 def char_levenshetien_dist(a, b, h = 0):
@@ -30,8 +27,8 @@ def cosine_dist(a, b):
     if len(a) == 0 or len(b) == 0:
         return 1.
     for a_idx, b_idx in itertools.product(a, b):
-        if a_idx.strip() == '<EPS>' or b_idx.strip() == '<EPS>':
-            pass
+        if a_idx.strip() == '' and b_idx.strip() == '':
+            raise BaseException("One of th strings has to be non-empty!")
         else:
             cs = (1. + ET.cosine_sim(a_idx, b_idx, full_word = 0 if options.word_vec_file is None else 1)) * .5 #squeeze into +1,0 range from +1,-1 
             cd = 1 - cs 
@@ -73,6 +70,7 @@ if __name__ == '__main__':
     story_arcs = '' 
     while story_arcs is not None:
         story_arcs = raw_input("Enter chat options (comma separated):")
+        sys.stderr.write('here')
         if story_arcs.strip() == '':
             story_arcs = None
             continue
