@@ -4,6 +4,7 @@ import sys
 import argparse
 import numpy as np
 import codecs
+EPS = u'__eps__'
 
 np.set_printoptions(precision = 4, linewidth = np.inf)
 
@@ -63,7 +64,7 @@ class CombinedEmbeddings(object):
         if self.word_vectors is not None and self.ngram_vectors is not None:
             assert self.ngram_vectors.dim == self.word_vectors.dim
         assert self.word_vectors is not None or self.ngram_vectors is not None
-        if  self.ngram_vectors.w2idx.get('__eps__', -1) == -1:
+        if  self.ngram_vectors.w2idx.get(EPS, -1) == -1:
             raise BaseException('Subword vector file should contain a vector for "__eps__"')
         else:
             pass
@@ -95,7 +96,7 @@ class CombinedEmbeddings(object):
         return final_vec * (1.0 / final_vec_num)
 
     def get_vec(self, w, full_word):
-        if w == '':
+        if w == EPS:
             return self.get_eps()
         else:
             w_vec = self.compute_word_vector(w, full_word)
@@ -103,7 +104,7 @@ class CombinedEmbeddings(object):
             return w_vec, w_norm
 
     def get_eps(self,):
-        g_idx = self.ngram_vectors.w2idx.get('__eps__', -1)
+        g_idx = self.ngram_vectors.w2idx.get(EPS, -1)
         assert g_idx != -1
         _vec = self.ngram_vectors.mat[g_idx] #[self.ngram_vectors.w2idx[g],:]
         _norm = np.linalg.norm(_vec)

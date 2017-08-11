@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 __author__ = 'arenduchintala'
 import itertools
 import sys
@@ -10,8 +9,8 @@ from pprint import pprint
 import numpy as np
 import codecs
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
-sys.stdin = codecs.getreader('utf-8')(sys.stdin)
-
+#sys.stdin = codecs.getreader('utf-8')(sys.stdin)
+EPS = u'__eps__'
 
 def char_levenshetien_dist(a, b, h = 0):
     assert isinstance(a, list)
@@ -24,8 +23,10 @@ def char_levenshetien_dist(a, b, h = 0):
 def cosine_dist(a, b):
     dist = 0.
     dist_c = 0
-    if len(a) == 0 or len(b) == 0:
-        return 1.
+    assert isinstance(a, list)
+    assert isinstance(b, list)
+    a = [EPS] if a == [] else a
+    b = [EPS] if b == [] else b
     for a_idx, b_idx in itertools.product(a, b):
         if a_idx.strip() == '' and b_idx.strip() == '':
             raise BaseException("One of th strings has to be non-empty!")
@@ -69,18 +70,17 @@ if __name__ == '__main__':
     ls = SpanEditSearch(0., options.span_size, char_levenshetien_dist) 
     story_arcs = '' 
     while story_arcs is not None:
-        story_arcs = raw_input("Enter chat options (comma separated):")
-        sys.stderr.write('here')
+        story_arcs = unicode(raw_input("Enter chat options (comma separated):"))
         if story_arcs.strip() == '':
             story_arcs = None
             continue
         story_arcs = story_arcs.strip().lower().split(',')
-        user_intput = raw_input("Enter learner input:")
-        user_intput = user_intput.strip().lower().split()
+        user_input = unicode(raw_input("Enter learner input:"))
+        user_input = user_input.strip().lower().split()
         print 'Cosine Distance based:'
         for sa_idx, sa in enumerate(story_arcs):
             sa = sa.split() 
-            table, path = cs.span_edit_dist(user_intput,sa)
+            table, path = cs.span_edit_dist(user_input,sa)
             if options.verbose == 2:
                 pprint(path)
             print sa_idx, show_alignments(path, options.verbose), 'cost:', path[-1].cost
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         print 'Levenshtein Distance based:'
         for sa_idx, sa in enumerate(story_arcs):
             sa = sa.split() 
-            table, path = ls.span_edit_dist(user_intput,sa)
+            table, path = ls.span_edit_dist(user_input,sa)
             if options.verbose == 2:
                 pprint(path)
             print sa_idx, show_alignments(path, options.verbose), 'cost:', path[-1].cost
