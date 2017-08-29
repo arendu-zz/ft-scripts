@@ -4,6 +4,7 @@ import sys
 import argparse
 import numpy as np
 import codecs
+from normalization import strip_accents, normalize
 EPS = u'__eps__'
 
 np.set_printoptions(precision = 4, linewidth = np.inf)
