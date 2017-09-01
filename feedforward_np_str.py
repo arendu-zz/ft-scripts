@@ -188,8 +188,8 @@ def examples(ff, k = 0):
 
 if __name__ == '__main__':
     opt= argparse.ArgumentParser(description="write program description here")
-    opt.add_argument('--fdict', action='store', dest='ngram_dict_path', default = './distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.fdict')
-    opt.add_argument('--params', action='store', dest='params', default='./distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.f.1,2,3.0.0.001.params')
+    opt.add_argument('--fdict', action='store', dest='ngram_dict_path', default = './distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.fdict')
+    opt.add_argument('--params', action='store', dest='params', default='./distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.f.1,2,3.0.0.001.params')
     opt.add_argument('--ftypes', action='store', dest='f_types', default='1,2,3')
     options = opt.parse_args()
     ff = FeedForward(options.ngram_dict_path, options.f_types, options.params)
