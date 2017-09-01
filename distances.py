@@ -1,13 +1,13 @@
 import editdistance
 from feedforward_np_str import FeedForward
 EPS = '<eps>'
-ff_ins_del = FeedForward('./distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.insdel.feats.fdict',
+ff_ins_del = FeedForward('./distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.insdel.feats.fdict',
         '1,2,3',
-        './distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.insdel.feats.f.1,2,3.0.0.001.params')
+        './distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.insdel.feats.f.1,2,3.0.0.001.params')
 
-ff_sub = FeedForward('./distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.fdict',
+ff_sub = FeedForward('./distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.fdict',
         '1,2,3',
-        './distance_metrics/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.f.1,2,3.0.0.001.params')
+        './distance_models/en-ppdb-ver2.0-m-phrasal.filtered.out.sub.sim.uniq.feats.f.1,2,3.0.0.001.params')
 
 
 def composite_score(a, b):
